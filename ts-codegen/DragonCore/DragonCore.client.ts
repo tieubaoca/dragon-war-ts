@@ -6,7 +6,7 @@
 
 import { CosmWasmClient, SigningCosmWasmClient, ExecuteResult } from "@cosmjs/cosmwasm-stargate";
 import { Coin, StdFee } from "@cosmjs/amino";
-import { InstantiateMsg, ExecuteMsg, Binary, Expiration, Timestamp, Uint64, ExecuteDragonCoreMsg, Action, Metadata, QueryMsg, AllNftInfoResponseForEmpty, OwnerOfResponse, Approval, NftInfoResponseForEmpty, Empty, OperatorResponse, TokensResponse, ApprovalResponse, ApprovalsResponse, Boolean, ContractInfoResponse, MinterResponse, Addr, MintersResponse, NumTokensResponse } from "./DragonCore.types";
+import { InstantiateMsg, ExecuteMsg, Binary, Expiration, Timestamp, Uint64, ExecuteDragonCoreMsg, Action, Metadata, QueryMsg, AllNftInfoResponseForMetadata, OwnerOfResponse, Approval, NftInfoResponseForMetadata, OperatorResponse, TokensResponse, ApprovalResponse, ApprovalsResponse, Boolean, ContractInfoResponse, MinterResponse, Addr, MintersResponse, NumTokensResponse } from "./DragonCore.types";
 export interface DragonCoreReadOnlyInterface {
   contractAddress: string;
   minters: () => Promise<MintersResponse>;
@@ -67,14 +67,14 @@ export interface DragonCoreReadOnlyInterface {
     tokenId
   }: {
     tokenId: string;
-  }) => Promise<NftInfoResponseForEmpty>;
+  }) => Promise<NftInfoResponseForMetadata>;
   allNftInfo: ({
     includeExpired,
     tokenId
   }: {
     includeExpired?: boolean;
     tokenId: string;
-  }) => Promise<AllNftInfoResponseForEmpty>;
+  }) => Promise<AllNftInfoResponseForMetadata>;
   tokens: ({
     limit,
     owner,
@@ -237,7 +237,7 @@ export class DragonCoreQueryClient implements DragonCoreReadOnlyInterface {
     tokenId
   }: {
     tokenId: string;
-  }): Promise<NftInfoResponseForEmpty> => {
+  }): Promise<NftInfoResponseForMetadata> => {
     return this.client.queryContractSmart(this.contractAddress, {
       nft_info: {
         token_id: tokenId
@@ -250,7 +250,7 @@ export class DragonCoreQueryClient implements DragonCoreReadOnlyInterface {
   }: {
     includeExpired?: boolean;
     tokenId: string;
-  }): Promise<AllNftInfoResponseForEmpty> => {
+  }): Promise<AllNftInfoResponseForMetadata> => {
     return this.client.queryContractSmart(this.contractAddress, {
       all_nft_info: {
         include_expired: includeExpired,

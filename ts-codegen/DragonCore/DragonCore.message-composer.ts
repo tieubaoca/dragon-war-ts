@@ -8,7 +8,7 @@ import { Coin } from "@cosmjs/amino";
 import { MsgExecuteContractEncodeObject } from "@cosmjs/cosmwasm-stargate";
 import { MsgExecuteContract } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 import { toUtf8 } from "@cosmjs/encoding";
-import { InstantiateMsg, ExecuteMsg, Binary, Expiration, Timestamp, Uint64, ExecuteDragonCoreMsg, Action, Metadata, QueryMsg, AllNftInfoResponseForEmpty, OwnerOfResponse, Approval, NftInfoResponseForEmpty, Empty, OperatorResponse, TokensResponse, ApprovalResponse, ApprovalsResponse, Boolean, ContractInfoResponse, MinterResponse, Addr, MintersResponse, NumTokensResponse } from "./DragonCore.types";
+import { InstantiateMsg, ExecuteMsg, Binary, Expiration, Timestamp, Uint64, ExecuteDragonCoreMsg, Action, Metadata, QueryMsg, AllNftInfoResponseForMetadata, OwnerOfResponse, Approval, NftInfoResponseForMetadata, OperatorResponse, TokensResponse, ApprovalResponse, ApprovalsResponse, Boolean, ContractInfoResponse, MinterResponse, Addr, MintersResponse, NumTokensResponse } from "./DragonCore.types";
 export interface DragonCoreMsg {
   contractAddress: string;
   sender: string;

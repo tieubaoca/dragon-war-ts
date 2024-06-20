@@ -7,7 +7,7 @@
 import { UseQueryOptions, useQuery, useMutation, UseMutationOptions } from "@tanstack/react-query";
 import { ExecuteResult } from "@cosmjs/cosmwasm-stargate";
 import { StdFee, Coin } from "@cosmjs/amino";
-import { InstantiateMsg, ExecuteMsg, Binary, Expiration, Timestamp, Uint64, ExecuteDragonCoreMsg, Action, Metadata, QueryMsg, AllNftInfoResponseForEmpty, OwnerOfResponse, Approval, NftInfoResponseForEmpty, Empty, OperatorResponse, TokensResponse, ApprovalResponse, ApprovalsResponse, Boolean, ContractInfoResponse, MinterResponse, Addr, MintersResponse, NumTokensResponse } from "./DragonCore.types";
+import { InstantiateMsg, ExecuteMsg, Binary, Expiration, Timestamp, Uint64, ExecuteDragonCoreMsg, Action, Metadata, QueryMsg, AllNftInfoResponseForMetadata, OwnerOfResponse, Approval, NftInfoResponseForMetadata, OperatorResponse, TokensResponse, ApprovalResponse, ApprovalsResponse, Boolean, ContractInfoResponse, MinterResponse, Addr, MintersResponse, NumTokensResponse } from "./DragonCore.types";
 import { DragonCoreQueryClient, DragonCoreClient } from "./DragonCore.client";
 export const dragonCoreQueryKeys = {
   contract: ([{
@@ -197,11 +197,11 @@ export const dragonCoreQueries = {
     ...options,
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)
   }),
-  nftInfo: <TData = NftInfoResponseForEmpty,>({
+  nftInfo: <TData = NftInfoResponseForMetadata,>({
     client,
     args,
     options
-  }: DragonCoreNftInfoQuery<TData>): UseQueryOptions<NftInfoResponseForEmpty, Error, TData> => ({
+  }: DragonCoreNftInfoQuery<TData>): UseQueryOptions<NftInfoResponseForMetadata, Error, TData> => ({
     queryKey: dragonCoreQueryKeys.nftInfo(client?.contractAddress, args),
     queryFn: () => client ? client.nftInfo({
       tokenId: args.tokenId
@@ -209,11 +209,11 @@ export const dragonCoreQueries = {
     ...options,
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)
   }),
-  allNftInfo: <TData = AllNftInfoResponseForEmpty,>({
+  allNftInfo: <TData = AllNftInfoResponseForMetadata,>({
     client,
     args,
     options
-  }: DragonCoreAllNftInfoQuery<TData>): UseQueryOptions<AllNftInfoResponseForEmpty, Error, TData> => ({
+  }: DragonCoreAllNftInfoQuery<TData>): UseQueryOptions<AllNftInfoResponseForMetadata, Error, TData> => ({
     queryKey: dragonCoreQueryKeys.allNftInfo(client?.contractAddress, args),
     queryFn: () => client ? client.allNftInfo({
       includeExpired: args.includeExpired,
@@ -312,35 +312,35 @@ export function useDragonCoreTokensQuery<TData = TokensResponse>({
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export interface DragonCoreAllNftInfoQuery<TData> extends DragonCoreReactQuery<AllNftInfoResponseForEmpty, TData> {
+export interface DragonCoreAllNftInfoQuery<TData> extends DragonCoreReactQuery<AllNftInfoResponseForMetadata, TData> {
   args: {
     includeExpired?: boolean;
     tokenId: string;
   };
 }
-export function useDragonCoreAllNftInfoQuery<TData = AllNftInfoResponseForEmpty>({
+export function useDragonCoreAllNftInfoQuery<TData = AllNftInfoResponseForMetadata>({
   client,
   args,
   options
 }: DragonCoreAllNftInfoQuery<TData>) {
-  return useQuery<AllNftInfoResponseForEmpty, Error, TData>(dragonCoreQueryKeys.allNftInfo(client?.contractAddress, args), () => client ? client.allNftInfo({
+  return useQuery<AllNftInfoResponseForMetadata, Error, TData>(dragonCoreQueryKeys.allNftInfo(client?.contractAddress, args), () => client ? client.allNftInfo({
     includeExpired: args.includeExpired,
     tokenId: args.tokenId
   }) : Promise.reject(new Error("Invalid client")), { ...options,
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export interface DragonCoreNftInfoQuery<TData> extends DragonCoreReactQuery<NftInfoResponseForEmpty, TData> {
+export interface DragonCoreNftInfoQuery<TData> extends DragonCoreReactQuery<NftInfoResponseForMetadata, TData> {
   args: {
     tokenId: string;
   };
 }
-export function useDragonCoreNftInfoQuery<TData = NftInfoResponseForEmpty>({
+export function useDragonCoreNftInfoQuery<TData = NftInfoResponseForMetadata>({
   client,
   args,
   options
 }: DragonCoreNftInfoQuery<TData>) {
-  return useQuery<NftInfoResponseForEmpty, Error, TData>(dragonCoreQueryKeys.nftInfo(client?.contractAddress, args), () => client ? client.nftInfo({
+  return useQuery<NftInfoResponseForMetadata, Error, TData>(dragonCoreQueryKeys.nftInfo(client?.contractAddress, args), () => client ? client.nftInfo({
     tokenId: args.tokenId
   }) : Promise.reject(new Error("Invalid client")), { ...options,
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)

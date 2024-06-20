@@ -185,9 +185,9 @@ export type QueryMsg = {
 } | {
   minter: {};
 };
-export interface AllNftInfoResponseForEmpty {
+export interface AllNftInfoResponseForMetadata {
   access: OwnerOfResponse;
-  info: NftInfoResponseForEmpty;
+  info: NftInfoResponseForMetadata;
 }
 export interface OwnerOfResponse {
   approvals: Approval[];
@@ -197,12 +197,9 @@ export interface Approval {
   expires: Expiration;
   spender: string;
 }
-export interface NftInfoResponseForEmpty {
-  extension: Empty;
+export interface NftInfoResponseForMetadata {
+  extension: Metadata;
   token_uri?: string | null;
-}
-export interface Empty {
-  [k: string]: unknown;
 }
 export interface OperatorResponse {
   approval: Approval;
